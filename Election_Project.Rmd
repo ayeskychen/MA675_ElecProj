@@ -1,0 +1,41 @@
+---
+title: "Election_Project"
+author: "Sky Liu, Longhao Chen, Emma Zhang"
+date: "10/15/2018"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(stringr)
+require(gdata)
+```
+
+
+#Table DonorList1: Key is contributor ID, which is a unique ID corresponding each individual donated in the election. The attributors are donor name, city, states, organization, date, amount, recipient ID
+```{r}
+DonorList = read.xls ("Donations to MA Cands 2018.xlsx", sheet = 1, header = TRUE)
+DonorList1 <- dplyr::select(DonorList,contribid,contrib,City,State,orgname,date,amount,recipid)
+```
+
+
+#Table StateList: Key is the state. Attributes are the number of donors and total amount of donation
+```{r}
+StateList <- DonorList1 %>% 
+  group_by(State) %>% 
+  summarise(
+    n = n(),
+    TotalDonation = sum(amount)
+  )
+```
+
+#Table RecipientList: The key is Candidate who receives donation from recipients. The attributes are cities/States the candidates are from, the amount of donation they recived, date, and the desription of expenditure.
+
+```{r}
+MA <- read.xls("MA_Candidate_Expenditures.xlsx")
+Expr<-dplyr::select(MA,c(Candidate,City,Amount,Date,State,Description))
+View(Expr)
+Expr1<-ta
+Expr1<- na.omit(Expr)
+sort(Expr$Amount)
+```
